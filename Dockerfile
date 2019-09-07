@@ -13,5 +13,12 @@ VOLUME /root/.composer/cache
 # Get composer installed to /usr/local/bin/composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-COPY . /usr/src/myapp
-WORKDIR /usr/src/myapp
+COPY app/* /usr/src/app/
+WORKDIR /usr/src/app
+
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+
+RUN ["chmod", "+x", \
+    "/docker-entrypoint.sh"]
+
+RUN ["/docker-entrypoint.sh"]
